@@ -12,6 +12,7 @@ const app = express();
 // Use Helmet for security headers
 app.use(helmet());
 app.use(helmet.noSniff()); // Prevent MIME type sniffing
+app.use(helmet.xssFilter()); // Prevent XSS attacks
 
 // Middleware to set cache-control headers to prevent caching
 app.use((req, res, next) => {
