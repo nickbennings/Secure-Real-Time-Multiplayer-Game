@@ -27,6 +27,9 @@ app.use(helmet.contentSecurityPolicy({
   }
 }));
 
+// Prevent MIME type sniffing
+app.use(helmet.noSniff());
+
 // Middleware to set cache-control headers to prevent caching
 app.use((req, res, next) => {
   res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
