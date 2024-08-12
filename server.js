@@ -11,8 +11,21 @@ const app = express();
 
 // Use Helmet for security headers
 app.use(helmet());
-app.use(helmet.noSniff()); // Prevent MIME type sniffing
-app.use(helmet.xssFilter()); // Prevent XSS attacks
+
+// Set Content Security Policy (CSP) to prevent XSS attacks
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+    defaultSrc: ["'self'"],
+    scriptSrc: ["'self'"],
+    styleSrc: ["'self'", 'https://fonts.googleapis.com'],
+    fontSrc: ["'self'", 'https://fonts.gstatic.com'],
+    imgSrc: ["'self'", 'data:'],
+    connectSrc: ["'self'"],
+    frameSrc: ["'none'"],
+    baseUri: ["'self'"],
+    formAction: ["'self'"]
+  }
+}));
 
 // Middleware to set cache-control headers to prevent caching
 app.use((req, res, next) => {
